@@ -20,3 +20,4 @@
     <span class="badge">{{order.item.name}}</span> {{order.item.ingredients}}&nbsp;(Qty:&nbsp;{{order.quantity}}) <button (click)="removeItem(i)">-</button>
   </li>
 </ul>
+<h2 *ngIf="orders.length > 0">Price: € {{totalPrice}}</h2>

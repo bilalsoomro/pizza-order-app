@@ -14,7 +14,7 @@ export class AppComponent {
   orders: Order [] = [];
   menu = [];
   keyword: string;
-  filteredMenu = [];
+  totalPrice: number = 0;
 
   ngOnInit() {
     let self = this;
@@ -22,23 +22,33 @@ export class AppComponent {
     self.pizzas.forEach((item) => {
       self.menu.push({'item': item, 'qty': 0});
     });
+  }
 
-    self.filteredMenu = this.menu.filter(
-      m => m.item.ingredients === self.keyword);
-    
+  calculatePrice() {
+    let self = this;
+    this.totalPrice = 0;
+
+    self.orders.forEach((order: Order) => {
+      this.totalPrice += (order.item.price * order.quantity);
+    });
   }
 
   addItem(pizza: Pizza, quantity: number) {
+    let self = this;
+    
+
     if(quantity == 0) {
       alert('Write the quantity');
       return;
     }
 
-    this.orders.push(new Order(pizza, quantity));
+    self.orders.push(new Order(pizza, quantity));
+    self.calculatePrice();
   }
 
   removeItem(index: number) {
-    console.log('item to remove', index);
-    this.orders.splice(index, 1);
+    let self = this;
+    self.orders.splice(index, 1);
+    self.calculatePrice();
   }
 }
