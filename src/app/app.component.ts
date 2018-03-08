@@ -62,6 +62,7 @@ export class AppComponent {
     let self = this;
     return this.http.post<any>('https://httpbin.org/post', self.orders, {})
     .subscribe(data => {
+      self.extractData = JSON.stringify(data);
       console.log('POST Successful. Data: ', data);
     }, error => {
       console.log(JSON.stringify(error.json()));

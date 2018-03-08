@@ -1,24 +1,62 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to the {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="./assets/logo.jpeg">
-</div>
-<h2>Menu</h2>
-<p>Search:&nbsp;<input type="text" [(ngModel)]="keyword" placeholder="Search by ingredient"/></p>
+<div class="container">
+  <div style="text-align:center">
+    <h1>
+      Welcome to the {{ title }}!
+    </h1>
+    <!-- <img width="300" alt="Angular Logo" src="./assets/logo.jpeg"> -->
+  </div>
 
-<ul class="pizzas">
-  <li *ngFor="let m of menu | myfilter:keyword">
-    <span class="badge">{{m.item.name}}</span> {{m.item.ingredients}} &nbsp; (Price: €{{m.item.price}})<input type="number" placeholder="Qty" [(ngModel)]="m.qty" name="pizza{{m.item.id}}" /> <button (click)="addItem(m.item, m.qty)">+</button>
-  </li>
-</ul>
-<h2>Order</h2>
-<p *ngIf="orders.length == 0">No orders made yet</p>
-<ul class="orders">
-  <li *ngFor="let order of orders; let i = index">
-    <span class="badge">{{order.item.name}}</span> {{order.item.ingredients}}&nbsp;(Qty:&nbsp;{{order.quantity}}) <button (click)="removeItem(i)">-</button>
-  </li>
-</ul>
-<h2 *ngIf="orders.length > 0">Price: € {{totalPrice}}</h2>
-<button (click)="placeOrder()">Place Order</button>
+  <div class="row">
+    <div class="col-6">
+      <div class="jumbotron">
+        <h2>Menu</h2>
+        <div class="form-group">
+          <input type="text" class="form-control" [(ngModel)]="keyword" aria-describedby="keyword" placeholder="Search by ingredient">
+        </div>
+
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let m of menu | myfilter:keyword">
+            <div class="row">
+              <div class="col-8">
+                <p>{{m.item.name}}&nbsp;(Price: €{{m.item.price}})</p>
+                <span>Ingredients: {{m.item.ingredients}}</span>
+              </div>
+              <div class="col">
+                <div class="input-group mb-3">
+                  <input type="number" min="0" class="form-control" [(ngModel)]="m.qty" name="pizza{{m.item.id}}" />
+                  <div class="input-group-append">
+                    <button class="btn btn-primary" (click)="addItem(m.item, m.qty)" type="button">+</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-6">
+      <div class="jumbotron">
+        <h2>Cart</h2>
+        <p *ngIf="orders.length == 0">No orders made yet</p>
+        <ul class="list-group">
+          <li class="list-group-item" *ngFor="let order of orders; let i = index">
+            <h2 style="display:inline">{{order.item.name}}
+              <span class="badge badge-secondary">Qty: {{order.quantity}}</span>
+            </h2>
+            <button class="btn btn-danger" style="display:block;float:right;" (click)="removeItem(i)">Remove</button>
+            <!-- (Qty:&nbsp;{{order.quantity}}) -->
+          </li>
+        </ul>
+        <br>
+        <div>
+          <h2 style="display:inline" *ngIf="orders.length > 0">Total price: € {{totalPrice}}</h2>
+          <button style="float:right;" class="btn btn-success" *ngIf="orders.length > 0" (click)="placeOrder()">Order</button>
+        </div>
+        <div *ngIf="extractData">
+          <span>{{extractData}}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
