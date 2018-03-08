@@ -3,6 +3,9 @@ import { PIZZAS } from './pizzas';
 import { Order } from './order';
 import { Pizza } from './pizza';
 
+import { Observable } from 'rxjs/Observable';
+import { HttpClient } from '@angular/common/http';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -15,6 +18,9 @@ export class AppComponent {
   menu = [];
   keyword: string;
   totalPrice: number = 0;
+  extractData: any;
+
+  constructor(private http: HttpClient) {}
 
   ngOnInit() {
     let self = this;
@@ -50,5 +56,15 @@ export class AppComponent {
     let self = this;
     self.orders.splice(index, 1);
     self.calculatePrice();
+  }
+
+  placeOrder() {
+    let self = this;
+    return this.http.post<any>('https://httpbin.org/post', self.orders, {})
+    .subscribe(data => {
+      console.log('POST Successful. Data: ', data);
+    }, error => {
+      console.log(JSON.stringify(error.json()));
+    })
   }
 }

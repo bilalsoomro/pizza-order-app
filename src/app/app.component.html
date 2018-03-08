@@ -10,7 +10,7 @@
 
 <ul class="pizzas">
   <li *ngFor="let m of menu | myfilter:keyword">
-    <span class="badge">{{m.item.name}}</span> {{m.item.ingredients}} <input type="number" placeholder="Qty" [(ngModel)]="m.qty" name="pizza{{m.item.id}}" /> <button (click)="addItem(m.item, m.qty)">+</button>
+    <span class="badge">{{m.item.name}}</span> {{m.item.ingredients}} &nbsp; (Price: €{{m.item.price}})<input type="number" placeholder="Qty" [(ngModel)]="m.qty" name="pizza{{m.item.id}}" /> <button (click)="addItem(m.item, m.qty)">+</button>
   </li>
 </ul>
 <h2>Order</h2>
@@ -21,3 +21,4 @@
   </li>
 </ul>
 <h2 *ngIf="orders.length > 0">Price: € {{totalPrice}}</h2>
+<button (click)="placeOrder()">Place Order</button>
