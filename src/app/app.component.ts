@@ -3,7 +3,7 @@ import { PIZZAS } from './pizzas';
 import { Order } from './order';
 import { Pizza } from './pizza';
 
-import { Observable } from 'rxjs/Observable';
+import { Observable } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
